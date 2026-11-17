@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alexandr Mangir — Senior Software Engineer</title>
+<meta name="description" content="Senior Software Engineer with 8+ years of experience building scalable web products with React, Next.js, TypeScript and AI.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alexandr Mangir — Senior Software Engineer">
+<meta property="og:description" content="React · Next.js · TypeScript · Micro-frontends · Design Systems · AI">
+<meta property="og:url" content="https://sasha95.github.io/">
+<meta property="og:image" content="https://sasha95.github.io/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Alexandr Mangir — Senior Software Engineer. React, Next.js, TypeScript, AI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#05060f">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Alexandr Mangir",
+  "jobTitle": "Senior Software Engineer",
+  "sameAs": ["https://www.linkedin.com/in/alexmag", "https://github.com/Sasha95"],
+  "knowsAbout": ["React", "Next.js", "TypeScript", "Micro-frontends", "Design Systems", "LLMs", "RAG", "AI agents"]
+}
+</script>
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --bg:#05060f; --panel:rgba(14,17,36,.62); --text:#e8ecf8; --muted:#9aa4bf; --line:rgba(255,255,255,.09);
+  --cyan:#22e3ff; --violet:#9d5cff; --pink:#ff3cd0; --lime:#b6ff3c;
+  --grad:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+  --loop:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink),var(--violet),var(--cyan));
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  --mono:"JetBrains Mono","Fira Code",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--text);font:16px/1.65 var(--sans);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+ul{list-style:none}
+::selection{background:var(--pink);color:#fff}
+:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.mono{font-family:var(--mono)}
+
+/* ---------- background layers ---------- */
+.blobs{position:fixed;inset:0;z-index:-3;overflow:hidden}
+.blobs i{position:absolute;width:55vmax;height:55vmax;border-radius:50%;filter:blur(90px);opacity:.26;animation:drift 22s ease-in-out infinite alternate}
+.blobs i:nth-child(1){background:var(--violet);top:-25vmax;left:-15vmax}
+.blobs i:nth-child(2){background:var(--cyan);bottom:-30vmax;right:-20vmax;opacity:.15;animation-duration:28s}
+.blobs i:nth-child(3){background:var(--pink);top:40%;left:45%;width:35vmax;height:35vmax;opacity:.1;animation-duration:34s}
+@keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
+#net{position:fixed;inset:0;z-index:-2;width:100%;height:100%;opacity:.6}
+#scene{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none}
+.spot{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(520px circle at var(--mx,-999px) var(--my,-999px),rgba(157,92,255,.14),transparent 60%)}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:0 50%;transform:scaleX(var(--p,0));background:var(--grad);box-shadow:0 0 12px var(--cyan)}
+
+/* ---------- nav ---------- */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:50;width:min(1100px,calc(100% - 28px));display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(8,10,24,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:11px;padding-right:8px;font-weight:600;font-size:15px;line-height:1.25}
+.brand img{width:34px;height:34px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--cyan),0 0 16px rgba(34,227,255,.55)}
+.brand small{display:block;font:400 12px var(--mono);color:var(--muted)}
+.nav nav{display:flex;align-items:center;gap:4px}
+.nav nav a{padding:8px 14px;border-radius:999px;color:var(--muted);font-size:14px;transition:color .2s,background .2s}
+.nav nav a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.nav nav a:not(.hire){position:relative}
+.nav nav a.active{color:var(--cyan);text-shadow:0 0 12px rgba(34,227,255,.6)}
+.nav nav a.active::after{content:"";position:absolute;left:50%;bottom:3px;width:4px;height:4px;margin-left:-2px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+.nav nav a.hire{color:#05060f;background:var(--cyan);font-weight:600;box-shadow:0 0 18px rgba(34,227,255,.5)}
+.nav nav a.hire:hover{background:#8af2ff}
+
+/* ---------- layout ---------- */
+section{width:min(1100px,calc(100% - 40px));margin:0 auto;padding:72px 0}
+.h2{display:flex;align-items:baseline;gap:14px;font-size:clamp(28px,4vw,44px);line-height:1.1;letter-spacing:-.02em;margin-bottom:32px}
+.h2 span{font:500 15px var(--mono);color:var(--cyan)}
+/* top:.11em moves the rule from the line-box middle to the middle of the lowercase letters */
+.h2::after{content:"";flex:1;height:1px;align-self:center;position:relative;top:.11em;background:linear-gradient(90deg,rgba(34,227,255,.7),rgba(157,92,255,.3) 40%,transparent)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1.15fr .85fr;align-items:center;gap:60px;padding-top:120px}
+.kicker{color:var(--cyan);font-size:14px;letter-spacing:.04em;margin-bottom:18px;animation:flicker 5s infinite}
+@keyframes flicker{0%,90%,100%{opacity:1}91%{opacity:.35}93%{opacity:1}95%{opacity:.6}96%{opacity:1}}
+h1{font-size:clamp(52px,9vw,112px);line-height:.95;letter-spacing:-.04em;font-weight:800}
+.grad{background:var(--loop);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite;filter:drop-shadow(0 0 22px rgba(157,92,255,.45))}
+@keyframes shine{to{background-position:200% center}}
+.lead{margin-top:26px;font-size:clamp(18px,2vw,22px);color:var(--muted);max-width:580px}
+.lead strong{color:var(--text);font-weight:600}
+.typed{color:var(--text);font-family:var(--mono);border-right:2px solid var(--pink);padding-right:3px;animation:caret 1s steps(1) infinite}
+@keyframes caret{50%{border-color:transparent}}
+.cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 26px;border-radius:14px;font-weight:600;color:#05060f;background:var(--grad);background-size:200% auto;box-shadow:0 0 24px rgba(157,92,255,.45);transition:transform .2s,box-shadow .3s,background-position .6s}
+.btn:hover{transform:translateY(-2px);background-position:100% center;box-shadow:0 0 38px rgba(255,60,208,.6)}
+.btn.ghost{background:transparent;color:var(--text);border:1px solid var(--line);box-shadow:none}
+.btn.ghost:hover{border-color:var(--cyan);box-shadow:0 0 22px rgba(34,227,255,.35)}
+.socials{display:flex;flex-wrap:wrap;gap:22px;margin-top:34px;font:14px var(--mono);color:var(--muted)}
+.socials a{transition:color .2s,text-shadow .2s}
+.socials a:hover{color:var(--cyan);text-shadow:0 0 10px var(--cyan)}
+
+.photo{position:relative;justify-self:center;width:min(400px,100%);aspect-ratio:1}
+.photo::before{content:"";position:absolute;inset:-12%;border-radius:50%;background:conic-gradient(var(--cyan),var(--violet),var(--pink),var(--cyan));filter:blur(60px);opacity:.4;animation:hue 12s linear infinite}
+/* hue shift instead of rotation: a rotating box would widen the page on phones */
+@keyframes hue{to{filter:blur(60px) hue-rotate(1turn)}}
+.ring{position:relative;height:100%;padding:3px;border-radius:36px;overflow:hidden;animation:bob 7s ease-in-out infinite}
+.ring::before{content:"";position:absolute;inset:-60%;background:conic-gradient(var(--cyan),var(--violet),var(--pink),var(--lime),var(--cyan));animation:spin 5s linear infinite}
+.ring img{position:relative;width:100%;height:100%;object-fit:cover;border-radius:33px}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes bob{50%{transform:translateY(-12px)}}
+.chip{position:absolute;padding:8px 14px;border-radius:12px;font:600 13px var(--mono);background:rgba(8,10,24,.82);border:1px solid var(--line);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:bob 5s ease-in-out infinite}
+.chip.c1{top:8%;left:-10%;color:var(--cyan);border-color:rgba(34,227,255,.45);box-shadow:0 0 18px rgba(34,227,255,.25)}
+.chip.c2{top:-4%;right:6%;color:var(--pink);border-color:rgba(255,60,208,.45);box-shadow:0 0 18px rgba(255,60,208,.25);animation-delay:-2s}
+.chip.c3{bottom:5%;left:-6%;color:var(--lime);border-color:rgba(182,255,60,.45);box-shadow:0 0 18px rgba(182,255,60,.2);animation-delay:-3.5s}
+.scroll{position:absolute;bottom:28px;left:50%;width:26px;height:42px;margin-left:-13px;border:2px solid rgba(255,255,255,.25);border-radius:14px}
+.scroll span{position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:wheel 1.8s infinite}
+@keyframes wheel{to{transform:translateY(14px);opacity:0}}
+
+/* ---------- marquee ---------- */
+.marquee{overflow:hidden;padding:26px 0;border-block:1px solid var(--line);background:rgba(8,10,24,.4);-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.marquee div{display:flex;width:max-content;animation:marquee 45s linear infinite}
+/* static fonts here: SF Pro is variable and its overlapping glyph contours show through text-stroke */
+.marquee span{display:flex;align-items:center;font:700 clamp(22px,3vw,34px) "Helvetica Neue",Arial,sans-serif;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);white-space:nowrap}
+.marquee span::after{content:"✦";margin:0 28px;font-size:.6em;color:var(--pink);-webkit-text-stroke:0;text-shadow:0 0 10px var(--pink)}
+.marquee span:nth-child(3n+1){color:var(--cyan);-webkit-text-stroke:0;text-shadow:0 0 18px rgba(34,227,255,.55)}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* ---------- about ---------- */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:56px;align-items:center}
+.about p{color:var(--muted);font-size:18px;margin-bottom:18px}
+.about p:last-child{margin-bottom:0}
+.about p strong{color:var(--text)}
+.stats{display:grid;gap:16px}
+.stat{padding:22px 24px;border-radius:18px;background:var(--panel);border:1px solid var(--line);backdrop-filter:blur(6px)}
+.stat b{display:block;font-size:46px;line-height:1.05;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{color:var(--muted);font-size:14px}
+.stat{--c:34,227,255;display:flex;align-items:center;justify-content:space-between;gap:18px;transition:border-color .3s}
+.stat:hover{border-color:rgba(var(--c),.4)}
+.stat .ico{flex:none;width:58px;height:58px;padding:14px;border-radius:16px;fill:none;stroke:rgb(var(--c));stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;background:rgba(var(--c),.08);border:1px solid rgba(var(--c),.3);box-shadow:0 0 22px rgba(var(--c),.18);transition:box-shadow .3s}
+.stat:hover .ico{box-shadow:0 0 34px rgba(var(--c),.4)}
+
+/* ---------- work ---------- */
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{--c:34,227,255;position:relative;display:flex;flex-direction:column;padding:28px;border-radius:20px;background:var(--panel);border:1px solid var(--line);overflow:hidden;backdrop-filter:blur(6px)}
+.card::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(380px circle at var(--x,50%) var(--y,50%),rgba(var(--c),.16),transparent 45%);opacity:0;transition:opacity .3s}
+.card:hover{border-color:rgba(var(--c),.45);box-shadow:0 0 34px rgba(var(--c),.12)}
+.card:hover::after{opacity:1}
+.card .num{position:absolute;top:24px;right:26px;font:600 13px var(--mono);color:rgba(255,255,255,.2)}
+.card .tag{font:12px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgb(var(--c));text-shadow:0 0 10px rgba(var(--c),.5)}
+.card h3{font-size:22px;letter-spacing:-.01em;margin:10px 0}
+.card p{color:var(--muted);font-size:15px;flex:1}
+.pills{display:flex;flex-wrap:wrap;gap:6px;margin-top:18px}
+.pills li{font:12px var(--mono);padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:#c9d1e8;background:rgba(255,255,255,.03)}
+.card .note{margin-top:16px;font:12px var(--mono);color:var(--lime)}
+.card .more{margin-top:16px;font:13px var(--mono);color:rgb(var(--c));align-self:flex-start}
+.card .more:hover{text-shadow:0 0 10px rgb(var(--c))}
+
+/* ---------- experience ---------- */
+.timeline{position:relative;padding-left:34px}
+.timeline::before{content:"";position:absolute;left:8px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--cyan),var(--violet),var(--pink),transparent);box-shadow:0 0 12px rgba(157,92,255,.6)}
+.timeline li{position:relative;padding-bottom:38px}
+.timeline li::before{content:"";position:absolute;left:-31px;top:7px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--cyan);box-shadow:0 0 12px var(--cyan)}
+.timeline li.now::before{background:var(--lime);border-color:var(--lime);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:inset 0 0 0 6px var(--lime),0 0 0 0 rgba(182,255,60,.7)}70%,100%{box-shadow:inset 0 0 0 6px var(--lime),0 0 0 12px rgba(182,255,60,0)}}
+.when{font:13px var(--mono);color:var(--cyan)}
+.now .when{color:var(--lime)}
+.timeline h3{font-size:20px;margin:4px 0 6px}
+.timeline h3 em{font-style:normal;font-weight:500;color:var(--muted)}
+.timeline p{color:var(--muted);max-width:760px}
+.timeline li:last-child{padding-bottom:0}
+/* education is the first stop of the journey: violet dot and date */
+.edu-item .when{color:var(--violet)}
+
+/* ---------- process ---------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;list-style:none}
+.step{--c:34,227,255;--c2:157,92,255;position:relative;text-align:center;padding:0 8px}
+.step:nth-child(2){--c:157,92,255;--c2:255,60,208}
+.step:nth-child(3){--c:255,60,208;--c2:182,255,60}
+.step:nth-child(4){--c:182,255,60}
+/* connector from this node's centre to the next one: dim track + neon fill in the two step colours */
+.step:not(:last-child)::before,.step:not(:last-child)::after{content:"";position:absolute;top:27px;left:50%;width:calc(100% + 20px);height:2px}
+.step::before{background:rgba(255,255,255,.08)}
+.step::after{background:linear-gradient(90deg,rgb(var(--c)),rgb(var(--c2)));box-shadow:0 0 12px rgba(var(--c),.5);transform-origin:left}
+.node{position:relative;z-index:1;display:grid;place-items:center;width:56px;height:56px;margin:0 auto 20px;border-radius:50%;background:var(--bg);border:2px solid rgb(var(--c));color:var(--text);font:600 15px var(--mono);box-shadow:0 0 0 4px rgba(var(--c),.12),0 0 18px rgba(var(--c),.45)}
+.step h3{font-size:20px;margin-bottom:8px}
+.step p{color:var(--muted);font-size:15px}
+/* node n lights at .3s + n*.5s; its connector fills in the next .5s, reaching node n+1 as it lights */
+.js .step::after{transition:transform .5s linear;transition-delay:calc(.3s + var(--n) * .5s)}
+.js .steps:not(.in) .step::after{transform:scaleX(0)}
+.js .node{transition:border-color .4s,box-shadow .5s,color .4s;transition-delay:calc(.3s + var(--n) * .5s)}
+.js .steps:not(.in) .node{border-color:rgba(255,255,255,.15);color:var(--muted);box-shadow:none}
+.js .step h3,.js .step p{transition:opacity .6s,transform .6s;transition-delay:calc(.4s + var(--n) * .5s)}
+.js .steps:not(.in) .step h3,.js .steps:not(.in) .step p{opacity:0;transform:translateY(10px)}
+@media (max-width:760px){
+  .steps{grid-template-columns:1fr;gap:28px}
+  .step{display:grid;grid-template-columns:56px 1fr;column-gap:18px;text-align:left;padding:0}
+  .node{grid-row:span 2;margin:0}
+  .step h3{align-self:end;margin:2px 0 4px}
+  .step:not(:last-child)::before,.step:not(:last-child)::after{top:28px;left:27px;width:2px;height:calc(100% + 28px)}
+  .step::after{background:linear-gradient(rgb(var(--c)),rgb(var(--c2)));transform-origin:top}
+  .js .steps:not(.in) .step::after{transform:scaleY(0)}
+}
+
+/* ---------- stack ---------- */
+.stack{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.group{padding:24px;border-radius:18px;background:var(--panel);border:1px solid var(--line);transition:border-color .3s,box-shadow .3s}
+.group:hover{border-color:rgba(157,92,255,.45);box-shadow:0 0 30px rgba(157,92,255,.12)}
+.group h3{font:600 13px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding-bottom:96px}
+.contact .big{font-size:clamp(40px,7vw,84px);line-height:1.02;letter-spacing:-.04em;margin:6px 0 22px}
+.contact > p{color:var(--muted);font-size:18px;max-width:560px;margin:0 auto}
+.links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px;margin-top:38px}
+.big-link{--c:34,227,255;display:flex;flex-direction:column;gap:2px;min-width:250px;padding:18px 26px;border-radius:18px;text-align:left;border:1px solid rgba(var(--c),.45);box-shadow:inset 0 0 30px rgba(var(--c),.12),0 0 30px rgba(var(--c),.15);transition:box-shadow .3s,transform .2s}
+.big-link.gh{--c:255,60,208}
+.big-link span{font:700 22px var(--sans)}
+.big-link span::after{content:" ↗";color:rgb(var(--c));text-shadow:0 0 10px rgb(var(--c))}
+.big-link small{font:13px var(--mono);color:var(--muted)}
+.big-link:hover{transform:translateY(-2px);box-shadow:inset 0 0 40px rgba(var(--c),.25),0 0 50px rgba(var(--c),.4)}
+footer{width:min(1100px,calc(100% - 40px));margin:0 auto;padding:36px 0 56px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;color:var(--muted);font:13px var(--mono)}
+footer .c{font-family:var(--sans)} /* the mono © sits small and high */
+
+/* ---------- ⌘K terminal ---------- */
+.kbd{display:inline-flex;align-items:center;gap:8px;padding:0;border:0;background:none;color:var(--muted);font:14px var(--mono);cursor:pointer;transition:color .2s,text-shadow .2s}
+.kbd:hover{color:var(--lime);text-shadow:0 0 10px var(--lime)}
+.kbd kbd{padding:1px 7px;border-radius:6px;border:1px solid var(--line);background:rgba(255,255,255,.05);font:12px var(--mono);color:var(--text);text-shadow:none}
+.term-wrap{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:20px;background:rgba(3,4,10,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.term-wrap[hidden]{display:none}
+.term{width:min(720px,100%);height:min(460px,80vh);display:flex;flex-direction:column;overflow:hidden;border-radius:16px;background:rgba(10,12,26,.96);border:1px solid rgba(34,227,255,.35);box-shadow:0 0 60px rgba(34,227,255,.18),0 30px 80px rgba(0,0,0,.6);font:14px/1.6 var(--mono);animation:pop .18s ease-out}
+@keyframes pop{from{transform:scale(.97);opacity:0}}
+.term-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;border-bottom:1px solid var(--line);color:var(--muted);font-size:12px}
+.term-bar i{width:11px;height:11px;border-radius:50%;background:#ff5f57}
+.term-bar i:nth-child(2){background:#febc2e}
+.term-bar i:nth-child(3){background:#28c840}
+.term-bar span{margin-left:8px}
+.term-out{flex:1;overflow:auto;padding:14px 16px;white-space:pre-wrap;color:#c9d1e8}
+.term-out .cmd{color:var(--text)}
+.term-out .cmd::before{content:"➜ ~ ";color:var(--lime)}
+.term-out .accent{color:var(--cyan)}
+.term-out .err{color:var(--pink)}
+.term-out a{color:var(--cyan);text-decoration:underline}
+.term-in{display:flex;gap:8px;padding:10px 16px 14px;border-top:1px solid var(--line)}
+.term-in span{color:var(--lime)}
+.term-in input{flex:1;min-width:0;border:0;outline:0;background:none;color:var(--text);font:inherit;caret-color:var(--pink)}
+
+/* ---------- reveal on scroll (only when JS is on) ---------- */
+.js [data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0s)}
+.js [data-reveal].in{opacity:1;transform:none}
+
+/* ---------- scroll animations ---------- */
+/* section headings: the neon rule draws itself, the number lights up */
+.js .h2::after{transform:scaleX(0);transform-origin:left;transition:transform 1.4s cubic-bezier(.2,.7,.2,1) .25s}
+.js .h2.in::after{transform:scaleX(1)}
+.js .h2 span{transition:text-shadow .6s .2s}
+.js .h2.in span{text-shadow:0 0 14px var(--cyan)}
+/* about: keywords get a gradient underline, stat icons spin into place */
+.about p strong{padding-bottom:1px;background:linear-gradient(90deg,var(--cyan),var(--pink)) no-repeat 0 100%/100% 2px}
+.js .about p strong{background-size:0 2px;transition:background-size 1s cubic-bezier(.2,.7,.2,1) .5s}
+.js .about p:nth-child(2) strong{transition-delay:.8s}
+.js .about .in p strong{background-size:100% 2px}
+.js .stat .ico{opacity:0;transform:rotate(-120deg) scale(.5);transition:opacity .6s calc(var(--d,0s) + .25s),transform .9s cubic-bezier(.2,.9,.3,1.3) calc(var(--d,0s) + .25s),box-shadow .3s}
+.js .stat.in .ico{opacity:1;transform:none}
+/* work: cards tilt up in 3D, a light glint runs across once */
+.js .card[data-reveal]{transform:perspective(900px) rotateX(14deg) translateY(40px) scale(.96);transform-origin:50% 100%}
+.js .card[data-reveal].in{transform:none}
+.card::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.1) 50%,transparent 65%);transform:translateX(-120%)}
+.card.in::before{animation:glint 1.4s cubic-bezier(.3,.6,.2,1) calc(var(--d,0s) + .35s) both}
+@keyframes glint{to{transform:translateX(120%)}}
+/* tags pop in one by one (--i is set from JS) */
+.js .card .pills li,.js .group .pills li{opacity:0;transform:translateY(8px) scale(.9);transition:opacity .45s,transform .45s cubic-bezier(.2,.9,.3,1.3);transition-delay:calc(var(--d,0s) + .3s + var(--i,0) * 45ms)}
+.js .card.in .pills li,.js .group.in .pills li{opacity:1;transform:none}
+/* experience: the line fills as you scroll (--tl from JS), dots light up when reached */
+.js .timeline::before{bottom:auto;height:var(--tl-end,calc(100% - 16px));background:rgba(255,255,255,.08);box-shadow:none}
+.js .timeline::after{content:"";position:absolute;left:4px;top:8px;width:10px;height:var(--tl,0px);background:radial-gradient(circle at 50% calc(100% - 5px),#fff 0 2.5px,rgba(34,227,255,.9) 3.5px,transparent 6px),linear-gradient(var(--cyan),var(--violet),var(--pink)) 50% 0/2px 100% no-repeat;filter:drop-shadow(0 0 6px rgba(157,92,255,.8))}
+.js .timeline.done::after{background:linear-gradient(var(--cyan),var(--violet),var(--pink)) 50% 0/2px 100% no-repeat}
+.timeline li::before{z-index:1} /* dots sit above the line */
+/* fill grows inward as an inset shadow: it always follows the round shape (an animated background could flash square) */
+.js .timeline li::before{--dot:var(--cyan);background:var(--bg);border-color:rgba(34,227,255,.3);box-shadow:inset 0 0 0 0 var(--dot),0 0 0 0 rgba(34,227,255,0),0 0 0 0 transparent;transition:box-shadow .5s cubic-bezier(.4,0,.2,1),border-color .3s,background-color .5s}
+.js .timeline li.now::before{--dot:var(--lime)}
+.js .timeline li.edu-item::before{--dot:var(--violet)}
+.js .timeline li.now:not(.passed)::before{animation:none}
+.js .timeline li.passed::before{background-color:var(--dot);border-color:var(--dot);box-shadow:inset 0 0 0 6px var(--dot),0 0 0 4px rgba(34,227,255,.12),0 0 14px 0 var(--dot)}
+
+/* ---------- responsive ---------- */
+@media (max-width:1060px){.grid,.stack{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:56px;padding-top:120px}
+  .photo{order:-1;width:min(300px,70vw)}
+  .about{grid-template-columns:1fr}
+  .scroll{display:none}
+}
+@media (max-width:880px){.nav nav a{padding:8px 10px;font-size:13px}}
+@media (max-width:700px){.nav nav a:not(.hire){display:none}}
+@media (max-width:640px){
+  section{padding:56px 0}
+  .grid,.stack{grid-template-columns:1fr}
+  .chip.c1{left:-4%}.chip.c2{right:2%}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  html{scroll-behavior:auto}
+  .js [data-reveal],.js .card[data-reveal],.js .h2::after,.js .stat .ico,.js .card .pills li,.js .group .pills li{opacity:1;transform:none}
+  .js .about p strong{background-size:100% 2px}
+  .card::before{display:none}
+}
+</style>
+</head>
+<body>
+<div class="blobs" aria-hidden="true"><i></i><i></i><i></i></div>
+<canvas id="net" aria-hidden="true"></canvas>
+<div class="spot" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="#top" aria-label="Alexandr Mangir, back to top">
+    <img src="headshot.jpg" alt="" width="34" height="34">
+    <span>Alexandr Mangir<small>Senior Software Engineer</small></span>
+  </a>
+  <nav aria-label="Main">
+    <a href="#about">About</a>
+    <a href="#work">Work</a>
+    <a href="#process">Process</a>
+    <a href="#experience">Experience</a>
+    <a href="#stack">Stack</a>
+    <a class="hire" href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div>
+      <h1 data-reveal style="--d:.1s">Alexandr<br><span class="grad">Mangir</span></h1>
+      <p class="lead" data-reveal style="--d:.2s">
+        I build <span class="sr-only">complete products, web platforms, SaaS apps and AI-powered products</span><span class="typed" id="typed" aria-hidden="true">complete products</span><br>
+        end to end — from idea and architecture to a <strong>polished, production-ready launch</strong>.
+      </p>
+      <div class="cta" data-reveal style="--d:.3s">
+        <a class="btn" href="#contact">Get in touch <span aria-hidden="true">→</span></a>
+        <a class="btn ghost" href="#work">See my work</a>
+      </div>
+      <ul class="socials" data-reveal style="--d:.4s">
+        <li><a href="https://github.com/Sasha95" target="_blank" rel="noopener">GitHub ↗</a></li>
+        <li><a href="https://www.linkedin.com/in/alexmag" target="_blank" rel="noopener">LinkedIn ↗</a></li>
+        <li><button class="kbd" type="button" aria-label="Open terminal">&gt;_ terminal <kbd>⌘K</kbd></button></li>
+      </ul>
+    </div>
+    <div class="photo" data-reveal style="--d:.2s">
+      <div class="ring"><img src="headshot.jpg" alt="Portrait of Alexandr Mangir" width="1024" height="1024"></div>
+      <span class="chip c1" aria-hidden="true">&lt;React /&gt;</span>
+      <span class="chip c2" aria-hidden="true">Next.js</span>
+      <span class="chip c3" aria-hidden="true">AI agents ✦</span>
+    </div>
+    <a class="scroll" href="#about" aria-label="Scroll to About"><span></span></a>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div>
+      <span>React</span><span>Next.js</span><span>TypeScript</span><span>Micro-frontends</span><span>Design Systems</span><span>Three.js</span><span>LLMs</span><span>RAG</span><span>AI Agents</span><span>Node.js</span><span>NestJS</span>
+      <span>React</span><span>Next.js</span><span>TypeScript</span><span>Micro-frontends</span><span>Design Systems</span><span>Three.js</span><span>LLMs</span><span>RAG</span><span>AI Agents</span><span>Node.js</span><span>NestJS</span>
+    </div>
+  </div>
+
+  <section id="about">
+    <h2 class="h2" data-reveal><span>01.</span>About me</h2>
+    <div class="about">
+      <div data-reveal>
+        <p>I'm a <strong>Senior Software Engineer</strong> who turns ideas into fast, scalable web products with React, Next.js and TypeScript.</p>
+        <p>I build <strong>micro-frontend architectures</strong>, <strong>design systems</strong> and real-time interfaces, and ship <strong>AI features</strong> with LLMs and RAG.</p>
+      </div>
+      <div class="stats">
+        <div class="stat" data-reveal style="--d:.1s;--c:34,227,255">
+          <div><b data-count="8" data-suffix="+">8+</b><span>years building scalable web products</span></div>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        </div>
+        <div class="stat" data-reveal style="--d:.2s;--c:255,60,208">
+          <div><b data-count="3">3</b><span>platforms built on micro-frontend architecture</span></div>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        </div>
+        <div class="stat" data-reveal style="--d:.3s;--c:182,255,60">
+          <div><b data-count="2">2</b><span>company-wide design systems built</span></div>
+          <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5"/><path d="M3 17l9 5 9-5"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <h2 class="h2" data-reveal><span>02.</span>Selected work</h2>
+    <div class="grid">
+      <article class="card" data-reveal style="--c:182,255,60">
+        <span class="num">01</span>
+        <span class="tag">Banking</span>
+        <h3>maib design system</h3>
+        <p>The bank's shared UI component library used across product teams, micro-frontends for digital banking and a card management module for corporate clients.</p>
+        <ul class="pills"><li>React</li><li>Next.js</li><li>Module Federation</li><li>TypeScript</li></ul>
+        <span class="note">● Now · largest bank in Moldova</span>
+      </article>
+      <article class="card" data-reveal style="--d:.1s;--c:255,60,208">
+        <span class="num">02</span>
+        <span class="tag">Media &amp; AI</span>
+        <h3>Otherweb &amp; PressHub</h3>
+        <p>A junk-free news platform that uses AI to filter clickbait and misinformation, built on Next.js with SSR, plus PressHub, an AI editorial workflow for journalists.</p>
+        <ul class="pills"><li>Next.js</li><li>SSR</li><li>Plate.js</li><li>AI</li></ul>
+        <span class="note">Acquired by SAI Technologies</span>
+      </article>
+      <article class="card" data-reveal style="--d:.2s;--c:157,92,255">
+        <span class="num">03</span>
+        <span class="tag">AI agents &amp; Web3</span>
+        <h3>Raters</h3>
+        <p>A social network for movie lovers: Next.js web app, Telegram Mini App, Web3 login with Solana and Internet Computer, and an x402 paid API for AI agents.</p>
+        <ul class="pills"><li>Next.js</li><li>Telegram Mini Apps</li><li>Solana</li><li>x402</li></ul>
+        <a class="more" href="https://www.ratersapp.com/" target="_blank" rel="noopener">ratersapp.com ↗</a>
+      </article>
+      <article class="card" data-reveal style="--c:34,227,255">
+        <span class="num">04</span>
+        <span class="tag">Engineering</span>
+        <h3>Flowqe</h3>
+        <p>A web CAD for electrical engineering: interactive diagram editor with drag-and-drop, real-time electrical calculations and DXF import/export.</p>
+        <ul class="pills"><li>Three.js</li><li>Next.js</li><li>TypeScript</li><li>DXF</li></ul>
+      </article>
+      <article class="card" data-reveal style="--d:.1s;--c:255,60,208">
+        <span class="num">05</span>
+        <span class="tag">EdTech</span>
+        <h3>Everact</h3>
+        <p>An all-in-one platform to create and sell online courses: LMS, marketing automation with a visual drag-and-drop funnel builder, and Stripe billing.</p>
+        <ul class="pills"><li>React</li><li>Module Federation</li><li>jsPlumb</li><li>Stripe</li></ul>
+        <a class="more" href="https://everact.io/" target="_blank" rel="noopener">everact.io ↗</a>
+      </article>
+      <article class="card" data-reveal style="--d:.2s;--c:182,255,60">
+        <span class="num">06</span>
+        <span class="tag">AI engineering</span>
+        <h3>RAG &amp; AI workflows</h3>
+        <p>RAG pipelines over internal knowledge, intelligent workflows that automate routine processes, and AI-assisted spec-driven development with coding agents.</p>
+        <ul class="pills"><li>LLMs</li><li>RAG</li><li>MCP</li><li>OpenSpec</li></ul>
+        <span class="note">● Now · at maib</span>
+      </article>
+    </div>
+  </section>
+
+  <section id="process">
+    <h2 class="h2" data-reveal><span>03.</span>How I work</h2>
+    <ol class="steps" data-reveal>
+      <li class="step" style="--n:0">
+        <span class="node">01</span>
+        <h3>Discover</h3>
+        <p>I dig into the product's goals, users and constraints, then turn them into a clear scope and plan.</p>
+      </li>
+      <li class="step" style="--n:1">
+        <span class="node">02</span>
+        <h3>Architect</h3>
+        <p>I pick the stack and architecture that will grow with the product, from a design system to micro-frontends.</p>
+      </li>
+      <li class="step" style="--n:2">
+        <span class="node">03</span>
+        <h3>Build</h3>
+        <p>I ship in short iterations with regular demos, and add AI where it brings real value.</p>
+      </li>
+      <li class="step" style="--n:3">
+        <span class="node">04</span>
+        <h3>Launch &amp; grow</h3>
+        <p>Performance, monitoring and analytics after release, then improvements based on real usage.</p>
+      </li>
+    </ol>
+  </section>
+
+  <section id="experience">
+    <h2 class="h2" data-reveal><span>04.</span>Experience</h2>
+    <ul class="timeline">
+      <li class="now" data-reveal>
+        <span class="when">Oct 2025 — Present</span>
+        <h3>Senior Software Engineer <em>· maib</em></h3>
+        <p>Micro-frontends for digital banking, the bank's design system, corporate card management and AI features with LLMs &amp; RAG. Introduced AI-assisted, spec-driven development; mentoring and code reviews.</p>
+      </li>
+      <li data-reveal>
+        <span class="when">Jul 2025 — Sep 2025</span>
+        <h3>Senior Frontend Developer <em>· Flowqe Inc.</em></h3>
+        <p>Web CAD for electrical engineering with Three.js, DXF import/export and real-time calculations.</p>
+      </li>
+      <li data-reveal>
+        <span class="when">Jul 2023 — May 2025</span>
+        <h3>Lead Front-end / Mobile Developer <em>· Otherweb</em></h3>
+        <p>Led front-end development of the Otherweb ecosystem (Otherweb, PressHub, Autoblogger) and built a company-wide UI kit. The company was later acquired by SAI Technologies.</p>
+      </li>
+      <li data-reveal>
+        <span class="when">Jan 2023 — Jun 2023</span>
+        <h3>Lead Front-end Developer <em>· Tetracode, freelance</em></h3>
+        <p>SPOKK online pet insurance on micro-frontends, Kidzify AI cartoons for kids with Three.js, and the Dispatchly real-time load board.</p>
+      </li>
+      <li data-reveal>
+        <span class="when">Dec 2020 — Jul 2023</span>
+        <h3>React Developer <em>· Wisent Group</em></h3>
+        <p>Everact LMS: courses, quizzes, a visual funnel builder, Stripe billing and Module Federation.</p>
+      </li>
+      <li data-reveal>
+        <span class="when">Apr 2019 — Dec 2020</span>
+        <h3>React / React Native Developer <em>· DexTechnology</em></h3>
+        <p>Nokia supplier portals, the LUXXY marketplace, the Radio Kartina streaming app and Samocat scooter sharing.</p>
+      </li>
+      <li data-reveal>
+        <span class="when">Dec 2017 — Apr 2019</span>
+        <h3>Software Engineer <em>· IHelp</em></h3>
+        <p>Where it all started.</p>
+      </li>
+      <li class="edu-item" data-reveal>
+        <span class="when">2013 — 2019 · Education</span>
+        <h3>MSc Applied Mathematics &amp; Computer Science <em>· Shevchenko Transnistria State University</em></h3>
+        <p>Bachelor's in Applied Mathematics, then a Master's in Applied Mathematics &amp; Computer Science.</p>
+      </li>
+    </ul>
+  </section>
+
+  <section id="stack">
+    <h2 class="h2" data-reveal><span>05.</span>Stack</h2>
+    <div class="stack">
+      <div class="group" data-reveal><h3>Frontend</h3><ul class="pills"><li>React</li><li>Next.js</li><li>TypeScript</li><li>Redux Toolkit</li><li>TanStack Query</li><li>Tailwind</li><li>MUI</li><li>shadcn/ui</li><li>React Native</li></ul></div>
+      <div class="group" data-reveal style="--d:.1s"><h3>Architecture</h3><ul class="pills"><li>Micro-frontends</li><li>Module Federation</li><li>Single-SPA</li><li>Design Systems</li><li>FSD</li><li>DDD</li></ul></div>
+      <div class="group" data-reveal style="--d:.2s"><h3>AI</h3><ul class="pills"><li>LLMs</li><li>RAG</li><li>Embeddings &amp; vector search</li><li>AI agents</li><li>MCP</li><li>Claude Code</li></ul></div>
+      <div class="group" data-reveal><h3>3D &amp; real-time</h3><ul class="pills"><li>Three.js</li><li>DXF</li><li>socket.io</li><li>Rich editors</li></ul></div>
+      <div class="group" data-reveal style="--d:.1s"><h3>Backend &amp; tools</h3><ul class="pills"><li>Node.js</li><li>NestJS</li><li>Stripe</li><li>Sentry</li><li>Figma</li></ul></div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <p class="kicker mono" data-reveal>// 06. What's next?</p>
+    <h2 class="big" data-reveal>Let's build something <span class="grad">bright</span>.</h2>
+    <p data-reveal>Have a product, a project or an idea? Let's connect.</p>
+    <div class="links" data-reveal>
+      <a class="big-link" href="https://www.linkedin.com/in/alexmag" target="_blank" rel="noopener"><span>LinkedIn</span><small>linkedin.com/in/alexmag</small></a>
+      <a class="big-link gh" href="https://github.com/Sasha95" target="_blank" rel="noopener"><span>GitHub</span><small>github.com/Sasha95</small></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span><span class="c">©</span> 2026 Alexandr Mangir</span>
+  <a href="#top">Back to top ↑</a>
+</footer>
+
+<div class="term-wrap" hidden>
+  <div class="term" role="dialog" aria-modal="true" aria-label="Terminal">
+    <div class="term-bar" aria-hidden="true"><i></i><i></i><i></i><span>alexandr@portfolio: ~</span></div>
+    <div class="term-out" aria-live="polite"></div>
+    <form class="term-in" autocomplete="off"><span aria-hidden="true">➜ ~</span><input aria-label="Command" spellcheck="false" autocapitalize="off"></form>
+  </div>
+</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const finePointer = matchMedia('(pointer: fine)').matches;
+const root = document.documentElement;
+
+// typing effect in the hero
+(() => {
+  const el = document.getElementById('typed');
+  const words = ['complete products', 'web platforms', 'SaaS apps', 'AI-powered products'];
+  if (reduce) return;
+  let w = 0, i = words[0].length, del = true;
+  const tick = () => {
+    i += del ? -1 : 1;
+    el.textContent = words[w].slice(0, i);
+    let t = del ? 45 : 95;
+    if (!del && i === words[w].length) { del = true; t = 1700; }
+    else if (del && i === 0) { del = false; w = (w + 1) % words.length; t = 350; }
+    setTimeout(tick, t);
+  };
+  setTimeout(tick, 1700);
+})();
+
+// reveal on scroll + number count-up
+const countUp = el => {
+  const end = +el.dataset.count, suffix = el.dataset.suffix || '';
+  if (reduce) return;
+  const t0 = performance.now();
+  const step = t => {
+    const k = Math.min(1, (t - t0) / 1400);
+    el.textContent = Math.round(end * (1 - (1 - k) ** 3)) + suffix;
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+};
+const io = new IntersectionObserver(entries => entries.forEach(e => {
+  if (!e.isIntersecting) return;
+  e.target.classList.add('in');
+  e.target.querySelectorAll('[data-count]').forEach(countUp);
+  io.unobserve(e.target);
+}), { threshold: .12, rootMargin: '0px 0px -6% 0px' });
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+
+// highlight the menu item of the section in view
+const navLinks = [...document.querySelectorAll('.nav nav a:not(.hire)')];
+const spy = new IntersectionObserver(entries => entries.forEach(e => {
+  if (e.isIntersecting) navLinks.forEach(a => a.classList.toggle('active', a.hash === '#' + e.target.id));
+}), { rootMargin: '-45% 0px -50% 0px' });
+document.querySelectorAll('main section[id]').forEach(s => spy.observe(s));
+
+// scroll progress bar + cursor spotlight
+const progress = () => root.style.setProperty('--p', scrollY / Math.max(1, root.scrollHeight - innerHeight));
+
+// stagger index for the tag pop-in
+document.querySelectorAll('.pills').forEach(ul => [...ul.children].forEach((li, i) => li.style.setProperty('--i', i)));
+
+// experience line fills up to ~60% of the screen; dots light up once the line reaches them
+const timeline = document.querySelector('.timeline'), milestones = [...timeline.children];
+const fillTimeline = () => {
+  const r = timeline.getBoundingClientRect(), mark = innerHeight * .62;
+  const end = milestones.at(-1).offsetTop + 5; // both lines stop at the centre of the last dot
+  timeline.style.setProperty('--tl-end', end + 'px');
+  const fill = Math.max(0, Math.min(end, mark - r.top - 8));
+  timeline.style.setProperty('--tl', fill + 'px');
+  timeline.classList.toggle('done', fill >= end); // drop the glowing head once it reaches the last dot
+  milestones.forEach(li => li.classList.toggle('passed', li.getBoundingClientRect().top + 7 < mark));
+};
+
+// the marquee speeds up with scroll velocity and runs backwards when scrolling up
+const marquee = document.querySelector('.marquee div').getAnimations()[0]; // none with reduced motion
+let lastY = scrollY, rate = 1, easing = false;
+const easeMarquee = () => {
+  rate += (1 - rate) * .06;
+  marquee.playbackRate = rate;
+  if (Math.abs(rate - 1) > .01) requestAnimationFrame(easeMarquee);
+  else { marquee.playbackRate = rate = 1; easing = false; }
+};
+const kickMarquee = () => {
+  const dy = scrollY - lastY;
+  lastY = scrollY;
+  if (!marquee) return;
+  rate = Math.max(-5, Math.min(6, 1 + dy * .08));
+  marquee.playbackRate = rate;
+  if (!easing) { easing = true; requestAnimationFrame(easeMarquee); }
+};
+
+let ticking = false;
+const onScroll = () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(() => { ticking = false; progress(); fillTimeline(); kickMarquee(); });
+};
+addEventListener('scroll', onScroll, { passive: true });
+addEventListener('resize', onScroll);
+progress();
+fillTimeline();
+if (finePointer) addEventListener('pointermove', e => {
+  root.style.setProperty('--mx', e.clientX + 'px');
+  root.style.setProperty('--my', e.clientY + 'px');
+}, { passive: true });
+
+// cards: glow follows the cursor + slight 3D tilt
+if (finePointer && !reduce) document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('pointermove', e => {
+    const r = card.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+    card.style.setProperty('--x', x + 'px');
+    card.style.setProperty('--y', y + 'px');
+    card.style.transition = 'transform .15s ease-out, border-color .3s, box-shadow .3s';
+    card.style.transform = `perspective(900px) rotateX(${(.5 - y / r.height) * 7}deg) rotateY(${(x / r.width - .5) * 7}deg) translateY(-4px)`;
+  });
+  card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+});
+
+// ⌘K / Ctrl+K terminal easter egg
+(() => {
+  const wrap = document.querySelector('.term-wrap'), out = wrap.querySelector('.term-out');
+  const form = wrap.querySelector('form'), input = wrap.querySelector('input'), btn = document.querySelector('.kbd');
+  if (!/Mac|iPhone|iPad/.test(navigator.platform)) btn.querySelector('kbd').textContent = 'Ctrl K';
+  const history = [];
+  let hIdx = 0, lastFocus = null;
+  // textContent only: whatever the visitor types is never parsed as HTML
+  const line = (text, cls) => { const d = document.createElement('div'); if (cls) d.className = cls; d.textContent = text; out.append(d); };
+  const link = (label, href) => {
+    const d = document.createElement('div'), a = document.createElement('a');
+    a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = label;
+    d.append(a); out.append(d);
+  };
+  const go = (name, href) => { line(`Opening ${name}…`); window.open(href, '_blank', 'noopener'); };
+  const commands = {
+    help: () => line('Commands: whoami · skills · process · experience · projects · contact · github · linkedin · clear · exit', 'accent'),
+    process: () => line('01 Discover  →  02 Architect  →  03 Build  →  04 Launch & grow'),
+    whoami: () => line('Alexandr Mangir — Senior Software Engineer.\n8+ years building scalable web products with React, Next.js and TypeScript.\nThese days: micro-frontends, design systems and AI features (LLMs, RAG, agents).'),
+    skills: () => line('frontend      React · Next.js · TypeScript · Redux Toolkit · TanStack Query · Tailwind\narchitecture  Micro-frontends · Module Federation · Design Systems · FSD · DDD\nai            LLMs · RAG · Embeddings · AI agents · MCP · Claude Code\nalso          Three.js · Node.js · NestJS · React Native'),
+    experience: () => line('2025 — now   Senior Software Engineer · maib\n2025         Senior Frontend Developer · Flowqe\n2023 — 2025  Lead Front-end / Mobile Developer · Otherweb\n2023         Lead Front-end Developer · Tetracode\n2020 — 2023  React Developer · Wisent Group\n2019 — 2020  React / React Native Developer · DexTechnology\n2017 — 2019  Software Engineer · IHelp'),
+    projects: () => { line('maib design system · Otherweb & PressHub · Raters · Flowqe · Everact · RAG & AI workflows'); link('ratersapp.com ↗', 'https://www.ratersapp.com/'); link('everact.io ↗', 'https://everact.io/'); },
+    contact: () => { link('linkedin.com/in/alexmag ↗', 'https://www.linkedin.com/in/alexmag'); link('github.com/Sasha95 ↗', 'https://github.com/Sasha95'); },
+    github: () => go('GitHub', 'https://github.com/Sasha95'),
+    linkedin: () => go('LinkedIn', 'https://www.linkedin.com/in/alexmag'),
+    clear: () => { out.textContent = ''; },
+    exit: () => close(),
+    'sudo hire-me': () => line('[sudo] access granted ✓  Let\'s talk → type "contact"', 'accent'),
+  };
+  const open = () => {
+    if (!wrap.hidden) return;
+    lastFocus = document.activeElement;
+    wrap.hidden = false;
+    if (!out.childElementCount) line('Welcome! Type "help" to see what I can do ✦', 'accent');
+    input.focus();
+  };
+  function close() { wrap.hidden = true; lastFocus?.focus(); }
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const cmd = input.value.trim().replace(/\s+/g, ' ');
+    input.value = '';
+    if (!cmd) return;
+    line(cmd, 'cmd');
+    history.push(cmd); hIdx = history.length;
+    const run = commands[cmd.toLowerCase()];
+    if (run) run(); else line(`command not found: ${cmd}. Type "help".`, 'err');
+    out.scrollTop = out.scrollHeight;
+  });
+  input.addEventListener('keydown', e => {
+    if (e.key === 'ArrowUp' && hIdx > 0) { e.preventDefault(); input.value = history[--hIdx]; }
+    else if (e.key === 'ArrowDown') { e.preventDefault(); hIdx = Math.min(history.length, hIdx + 1); input.value = history[hIdx] || ''; }
+    else if (e.key === 'Tab') { // autocomplete, and keeps focus inside the dialog
+      e.preventDefault();
+      const match = input.value && Object.keys(commands).find(c => c.startsWith(input.value.toLowerCase()));
+      if (match) input.value = match;
+    }
+  });
+  addEventListener('keydown', e => {
+    if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); wrap.hidden ? open() : close(); }
+    else if (e.key === 'Escape' && !wrap.hidden) close();
+  });
+  wrap.addEventListener('mousedown', e => { if (e.target === wrap) close(); });
+  btn.addEventListener('click', open);
+})();
+
+// neon node network in the background
+(() => {
+  const cv = document.getElementById('net'), ctx = cv.getContext('2d');
+  const colors = ['34,227,255', '157,92,255', '255,60,208'];
+  const LINK = 140, MOUSE = 200;
+  let w, h, pts = [], raf = 0;
+  const mouse = { x: -1e4, y: -1e4 };
+  const init = () => {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = innerWidth; h = innerHeight;
+    cv.width = w * dpr; cv.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    // ponytail: O(n²) neighbour scan, fine because n is capped at 90
+    const n = Math.min(90, Math.round(w * h / 16000));
+    pts = Array.from({ length: n }, () => ({
+      x: Math.random() * w, y: Math.random() * h,
+      vx: (Math.random() - .5) * .35, vy: (Math.random() - .5) * .35,
+      c: colors[Math.random() * colors.length | 0],
+    }));
+  };
+  const line = (a, b, rgb, alpha) => {
+    ctx.strokeStyle = `rgba(${rgb},${alpha})`;
+    ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+  };
+  const draw = () => {
+    ctx.clearRect(0, 0, w, h);
+    ctx.lineWidth = 1;
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > w) { p.vx *= -1; p.x = Math.max(0, Math.min(w, p.x)); }
+      if (p.y < 0 || p.y > h) { p.vy *= -1; p.y = Math.max(0, Math.min(h, p.y)); }
+    }
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      for (let j = i + 1; j < pts.length; j++) {
+        const d = Math.hypot(a.x - pts[j].x, a.y - pts[j].y);
+        if (d < LINK) line(a, pts[j], a.c, (1 - d / LINK) * .35);
+      }
+      const md = Math.hypot(a.x - mouse.x, a.y - mouse.y);
+      if (md < MOUSE) line(a, mouse, a.c, (1 - md / MOUSE) * .6);
+      ctx.fillStyle = `rgba(${a.c},.15)`;
+      ctx.beginPath(); ctx.arc(a.x, a.y, 5, 0, 7); ctx.fill();
+      ctx.fillStyle = `rgba(${a.c},.9)`;
+      ctx.beginPath(); ctx.arc(a.x, a.y, 1.8, 0, 7); ctx.fill();
+    }
+  };
+  const loop = () => { draw(); raf = requestAnimationFrame(loop); };
+  let stopped = false;
+  // fallback background: the 3D scene calls stop() once it is running
+  window.net2d = { stop() { stopped = true; cancelAnimationFrame(raf); cv.remove(); } };
+  init();
+  addEventListener('resize', () => { if (stopped) return; init(); if (reduce) draw(); });
+  if (reduce) { draw(); return; }
+  addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+  document.addEventListener('mouseleave', () => { mouse.x = mouse.y = -1e4; });
+  document.addEventListener('visibilitychange', () => {
+    cancelAnimationFrame(raf);
+    if (!document.hidden && !stopped) loop();
+  });
+  loop();
+})();
+</script>
+
+<script type="module">
+// 3D hero: a neon "neural globe" behind the portrait plus a starfield over the whole page.
+// Without WebGL, with reduced motion or if the CDN is unreachable, the 2D net stays.
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  try {
+    start3d(await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js'));
+  } catch (err) {
+    console.info('3D scene disabled, using the 2D background:', err.message);
+  }
+}
+
+function start3d(THREE) {
+  const canvas = Object.assign(document.createElement('canvas'), { id: 'scene' });
+  canvas.setAttribute('aria-hidden', 'true');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); // throws without WebGL
+  document.body.prepend(canvas);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+  camera.position.z = 9;
+
+  const cyan = new THREE.Color('#22e3ff'), violet = new THREE.Color('#9d5cff'), pink = new THREE.Color('#ff3cd0');
+  const glow = { transparent: true, depthWrite: false, blending: THREE.AdditiveBlending };
+  const sprite = (() => { // soft round dot for all points
+    const c = Object.assign(document.createElement('canvas'), { width: 64, height: 64 }), g = c.getContext('2d');
+    const r = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    r.addColorStop(0, 'rgba(255,255,255,1)'); r.addColorStop(.25, 'rgba(255,255,255,.8)'); r.addColorStop(1, 'rgba(255,255,255,0)');
+    g.fillStyle = r; g.fillRect(0, 0, 64, 64);
+    return new THREE.CanvasTexture(c);
+  })();
+  const dots = (size, opacity = 1) => new THREE.PointsMaterial({ size, map: sprite, vertexColors: true, opacity, ...glow });
+  const rgb = colors => new THREE.Float32BufferAttribute(colors.flatMap(c => [c.r, c.g, c.b]), 3);
+
+  // globe: nodes on a fibonacci sphere, cyan on top → violet → pink at the bottom
+  const R = 2, N = 380, pos = [], col = [];
+  for (let i = 0; i < N; i++) {
+    const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), a = i * 2.39996;
+    pos.push(new THREE.Vector3(Math.cos(a) * r * R, y * R, Math.sin(a) * r * R));
+    col.push(y > 0 ? cyan.clone().lerp(violet, 1 - y) : violet.clone().lerp(pink, -y));
+  }
+  const globe = new THREE.Group();
+  const nodes = new THREE.BufferGeometry().setFromPoints(pos);
+  nodes.setAttribute('color', rgb(col));
+  globe.add(new THREE.Points(nodes, dots(0.09)));
+
+  // links to the 3 nearest nodes; ponytail: O(n²) pass, once at start (n = 380)
+  const edges = [], lineEnds = [], lineCol = [];
+  pos.forEach((p, i) => {
+    pos.map((q, j) => [p.distanceToSquared(q), j]).sort((x, y) => x[0] - y[0]).slice(1, 4)
+      .forEach(([, j]) => { if (i < j) { edges.push([i, j]); lineEnds.push(p, pos[j]); lineCol.push(col[i], col[j]); } });
+  });
+  const links = new THREE.BufferGeometry().setFromPoints(lineEnds);
+  links.setAttribute('color', rgb(lineCol));
+  globe.add(new THREE.LineSegments(links, new THREE.LineBasicMaterial({ vertexColors: true, opacity: .35, ...glow })));
+
+  const core = new THREE.LineSegments(new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.15, 1)),
+    new THREE.LineBasicMaterial({ color: violet, opacity: .22, ...glow }));
+  globe.add(core);
+  const orbit = (radius, color, tilt) => {
+    const m = new THREE.Mesh(new THREE.TorusGeometry(radius, .008, 8, 220), new THREE.MeshBasicMaterial({ color, opacity: .55, ...glow }));
+    m.rotation.set(tilt, .3, 0);
+    globe.add(m);
+    return m;
+  };
+  const orbit1 = orbit(2.55, pink, 1.25), orbit2 = orbit(2.85, cyan, 1.9);
+
+  // "data" pulses running along random links
+  const P = 26, pulses = Array.from({ length: P }, () => ({ e: edges[Math.random() * edges.length | 0], t: Math.random(), v: .004 + Math.random() * .01 }));
+  const pulseGeo = new THREE.BufferGeometry();
+  pulseGeo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(P * 3), 3));
+  pulseGeo.setAttribute('color', rgb(Array(P).fill(new THREE.Color(1, 1, 1))));
+  globe.add(new THREE.Points(pulseGeo, dots(0.16)));
+  scene.add(globe);
+
+  // starfield over the whole page, laid out in screen space so it fills any aspect ratio;
+  // scrolling wraps it around, nearer stars move faster
+  const S = 800, starPos = new Float32Array(S * 3), starCol = [];
+  const starSeeds = Array.from({ length: S }, (_, i) => {
+    starCol.push([cyan, violet, pink][i % 3]);
+    return { x: Math.random() * 2 - 1, y: Math.random() * 2 - 1, z: 2 - Math.random() * 14 };
+  });
+  const starGeo = new THREE.BufferGeometry();
+  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+  starGeo.setAttribute('color', rgb(starCol));
+  const stars = new THREE.Points(starGeo, dots(0.05, .7));
+  stars.frustumCulled = false; // positions are rewritten every frame
+  scene.add(stars);
+  const tanHalfFov = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const wrap = v => ((v + 1) % 2 + 2) % 2 - 1; // into [-1, 1)
+  const placeStars = t => {
+    starSeeds.forEach((s, i) => {
+      const depth = camera.position.z - s.z, halfH = depth * tanHalfFov * 1.1, halfW = halfH * camera.aspect;
+      starPos[i * 3] = wrap(s.x + t * .003) * halfW;
+      starPos[i * 3 + 1] = wrap(s.y + scrollY * .0035 / depth) * halfH;
+      starPos[i * 3 + 2] = s.z;
+    });
+    starGeo.attributes.position.needsUpdate = true;
+  };
+
+  // pin the globe behind the portrait: it scrolls away together with the hero
+  const photo = document.querySelector('.photo'), ray = new THREE.Vector3();
+  const placeGlobe = () => {
+    const r = photo.getBoundingClientRect();
+    ray.set((r.left + r.width / 2) / innerWidth * 2 - 1, 1 - (r.top + r.height / 2) / innerHeight * 2, .5)
+      .unproject(camera).sub(camera.position).normalize();
+    globe.position.copy(camera.position).addScaledVector(ray, -camera.position.z / ray.z);
+    const worldPerPx = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z / innerHeight;
+    globe.scale.setScalar(r.width * .62 * worldPerPx / R);
+  };
+
+  const resize = () => {
+    // cap the drawing buffer at ~6 MP: huge retina screens stay smooth and within GPU limits
+    renderer.setPixelRatio(Math.min(devicePixelRatio, 2, Math.sqrt(6e6 / (innerWidth * innerHeight))));
+    renderer.setSize(innerWidth, innerHeight, false);
+    camera.aspect = innerWidth / innerHeight;
+    camera.updateProjectionMatrix();
+  };
+  resize();
+  addEventListener('resize', resize);
+  const mouse = { x: 0, y: 0 };
+  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; }, { passive: true });
+
+  const clock = new THREE.Clock();
+  let raf = 0;
+  const frame = () => {
+    const t = clock.getElapsedTime();
+    camera.position.x += (mouse.x * .8 - camera.position.x) * .04; // gentle mouse parallax
+    camera.position.y += (-mouse.y * .5 - camera.position.y) * .04;
+    camera.lookAt(0, 0, 0);
+    camera.updateMatrixWorld();
+    placeGlobe();
+    globe.rotation.y = t * .12;
+    globe.rotation.x = Math.sin(t * .2) * .15 + scrollY * .0006;
+    core.rotation.set(t * .15, -t * .3, 0);
+    orbit1.rotation.z = t * .25;
+    orbit2.rotation.z = -t * .18;
+    const a = pulseGeo.attributes.position.array;
+    pulses.forEach((p, i) => {
+      p.t += p.v;
+      if (p.t > 1) { p.t = 0; p.e = edges[Math.random() * edges.length | 0]; }
+      const from = pos[p.e[0]], to = pos[p.e[1]];
+      a[i * 3] = from.x + (to.x - from.x) * p.t;
+      a[i * 3 + 1] = from.y + (to.y - from.y) * p.t;
+      a[i * 3 + 2] = from.z + (to.z - from.z) * p.t;
+    });
+    pulseGeo.attributes.position.needsUpdate = true;
+    placeStars(t);
+    renderer.render(scene, camera);
+    raf = requestAnimationFrame(frame);
+  };
+  document.addEventListener('visibilitychange', () => { cancelAnimationFrame(raf); if (!document.hidden) frame(); });
+  frame();
+  window.net2d?.stop(); // 3D is running — retire the 2D background
+}
+</script>
+</body>
+</html>
