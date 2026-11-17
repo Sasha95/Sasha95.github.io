@@ -75,7 +75,7 @@ ul{list-style:none}
 .blobs i:nth-child(3){background:var(--pink);top:40%;left:45%;width:35vmax;height:35vmax;opacity:.1;animation-duration:34s}
 @keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
 #net{position:fixed;inset:0;z-index:-2;width:100%;height:100%;opacity:.6;transition:opacity 1.2s}
-#net.out{opacity:0}
+#net.out,.js:not(.ready) #net{opacity:0}
 #scene{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none;animation:fadein 1.2s both}
 @keyframes fadein{from{opacity:0}}
 .spot{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(520px circle at var(--mx,-999px) var(--my,-999px),rgba(157,92,255,.14),transparent 60%)}
@@ -124,6 +124,9 @@ h1{font-size:clamp(52px,9vw,112px);line-height:.95;letter-spacing:-.04em;font-we
 /* entrance without opacity: the hero is visible from the first paint (fast LCP) */
 .hero h1,.hero .lead,.hero .cta,.hero .socials,.hero .photo{animation:rise .9s cubic-bezier(.2,.7,.2,1) var(--d,0s) both}
 @keyframes rise{from{transform:translateY(24px)}}
+/* decorative loops wait for the load event: a light first paint even on slow phones without a GPU */
+.js:not(.ready) *,.js:not(.ready) *::before,.js:not(.ready) *::after{animation-play-state:paused!important}
+.js:not(.ready) .hero :is(h1,.lead,.cta,.socials,.photo){animation-play-state:running!important}
 
 .photo{position:relative;justify-self:center;width:min(400px,100%);aspect-ratio:1}
 .photo::before{content:"";position:absolute;inset:-12%;border-radius:50%;background:conic-gradient(var(--cyan),var(--violet),var(--pink),var(--cyan));filter:blur(60px);opacity:.4;animation:hue 12s linear infinite}
@@ -577,6 +580,9 @@ footer .c{font-family:var(--sans)} /* the mono © sits small and high */
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(pointer: fine)').matches;
 const root = document.documentElement;
+// decorative loops (CSS and canvas) start after load, so the first paint stays light
+const afterLoad = fn => document.readyState === 'complete' ? fn() : addEventListener('load', fn, { once: true });
+afterLoad(() => root.classList.add('ready'));
 
 // typing effect in the hero
 (() => {
@@ -642,7 +648,7 @@ const fillTimeline = () => {
 
 // the marquee speeds up with scroll velocity and runs backwards when scrolling up
 let marquee; // looked up on the first scroll: getAnimations() forces a style pass; none with reduced motion
-let lastY = scrollY, rate = 1, easing = false;
+let lastY, rate = 1, easing = false;
 const easeMarquee = () => {
   rate += (1 - rate) * .06;
   marquee.playbackRate = rate;
@@ -650,7 +656,7 @@ const easeMarquee = () => {
   else { marquee.playbackRate = rate = 1; easing = false; }
 };
 const kickMarquee = () => {
-  const dy = scrollY - lastY;
+  const dy = scrollY - (lastY ?? scrollY);
   lastY = scrollY;
   if (marquee === undefined) marquee = document.querySelector('.marquee div').getAnimations()[0] || null;
   if (!marquee) return;
@@ -800,16 +806,16 @@ if (finePointer && !reduce) document.querySelectorAll('.card').forEach(card => {
   let stopped = false;
   // fallback background: the 3D scene calls stop() once it is running
   window.net2d = { stop() { stopped = true; cancelAnimationFrame(raf); cv.classList.add('out'); setTimeout(() => cv.remove(), 1200); } };
-  init();
   addEventListener('resize', () => { if (stopped) return; init(); if (reduce) draw(); });
-  if (reduce) { draw(); return; }
+  afterLoad(() => { init(); if (reduce) draw(); }); // sized after load: no forced layout while parsing
+  if (reduce) return;
   addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
   document.addEventListener('mouseleave', () => { mouse.x = mouse.y = -1e4; });
   document.addEventListener('visibilitychange', () => {
     cancelAnimationFrame(raf);
-    if (!document.hidden && !stopped) loop();
+    if (!document.hidden && !stopped && w) loop();
   });
-  loop();
+  afterLoad(loop);
 })();
 </script>
 
@@ -822,18 +828,22 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   try {
     if (document.readyState !== 'complete') await new Promise(r => addEventListener('load', r, { once: true }));
     await idle();
-    await start3d(await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js'));
+    const THREE = await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js');
+    await idle(); // the GPU process is warm by now: creating the context stays cheap
+    // hardware-accelerated WebGL2 or nothing: in software it would only slow the page down
+    const canvas = Object.assign(document.createElement('canvas'), { id: 'scene' });
+    const gl = canvas.getContext('webgl2', { alpha: true, antialias: true, failIfMajorPerformanceCaveat: true });
+    if (!gl) throw new Error('no hardware-accelerated WebGL2');
+    await start3d(THREE, canvas, gl);
   } catch (err) {
     console.info('3D scene disabled, using the 2D background:', err.message);
   }
 }
 
-async function start3d(THREE) {
+async function start3d(THREE, canvas, context) {
   await idle();
-  const canvas = Object.assign(document.createElement('canvas'), { id: 'scene' });
   canvas.setAttribute('aria-hidden', 'true');
-  // throws without WebGL or when it would only run in software (no GPU)
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, failIfMajorPerformanceCaveat: true });
+  const renderer = new THREE.WebGLRenderer({ canvas, context, antialias: true });
   await idle();
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
