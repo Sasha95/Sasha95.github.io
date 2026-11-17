@@ -4,10 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alexandr Mangir — Senior Software Engineer</title>
-<meta name="description" content="Senior Software Engineer with 8+ years of experience building scalable web products with React, Next.js, TypeScript and AI.">
+<meta name="description" content="Full-stack Senior Software Engineer with 8+ years of experience building high-performance, scalable web products with React, Next.js, Node.js and AI.">
+<link rel="canonical" href="https://sasha95.github.io/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Alexandr Mangir — Senior Software Engineer">
-<meta property="og:description" content="React · Next.js · TypeScript · Micro-frontends · Design Systems · AI">
+<meta property="og:description" content="React · Next.js · Node.js · NestJS · TypeScript · AI">
 <meta property="og:url" content="https://sasha95.github.io/">
 <meta property="og:image" content="https://sasha95.github.io/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -20,11 +21,29 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Alexandr Mangir",
-  "jobTitle": "Senior Software Engineer",
-  "sameAs": ["https://www.linkedin.com/in/alexmag", "https://github.com/Sasha95"],
-  "knowsAbout": ["React", "Next.js", "TypeScript", "Micro-frontends", "Design Systems", "LLMs", "RAG", "AI agents"]
+  "@graph": [
+    {
+      "@type": "ProfilePage",
+      "@id": "https://sasha95.github.io/#page",
+      "url": "https://sasha95.github.io/",
+      "name": "Alexandr Mangir — Senior Software Engineer",
+      "inLanguage": "en",
+      "dateModified": "2026-11-18",
+      "mainEntity": { "@id": "https://sasha95.github.io/#me" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://sasha95.github.io/#me",
+      "name": "Alexandr Mangir",
+      "url": "https://sasha95.github.io/",
+      "image": "https://sasha95.github.io/headshot.jpg",
+      "jobTitle": "Senior Software Engineer",
+      "description": "Full-stack Senior Software Engineer with 8+ years of experience building high-performance, scalable web products with React, Next.js, TypeScript, Node.js and NestJS, from micro-frontend platforms and design systems to AI features built on LLMs and RAG.",
+      "alumniOf": { "@type": "CollegeOrUniversity", "name": "Shevchenko Transnistria State University" },
+      "sameAs": ["https://www.linkedin.com/in/alexmag", "https://github.com/Sasha95"],
+      "knowsAbout": ["React", "Next.js", "TypeScript", "Node.js", "NestJS", "Micro-frontends", "Design systems", "Three.js", "LLMs", "RAG", "AI agents"]
+    }
+  ]
 }
 </script>
 <script>document.documentElement.classList.add('js')</script>
@@ -55,8 +74,10 @@ ul{list-style:none}
 .blobs i:nth-child(2){background:var(--cyan);bottom:-30vmax;right:-20vmax;opacity:.15;animation-duration:28s}
 .blobs i:nth-child(3){background:var(--pink);top:40%;left:45%;width:35vmax;height:35vmax;opacity:.1;animation-duration:34s}
 @keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.15)}}
-#net{position:fixed;inset:0;z-index:-2;width:100%;height:100%;opacity:.6}
-#scene{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none}
+#net{position:fixed;inset:0;z-index:-2;width:100%;height:100%;opacity:.6;transition:opacity 1.2s}
+#net.out{opacity:0}
+#scene{position:fixed;inset:0;z-index:-2;width:100%;height:100%;pointer-events:none;animation:fadein 1.2s both}
+@keyframes fadein{from{opacity:0}}
 .spot{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(520px circle at var(--mx,-999px) var(--my,-999px),rgba(157,92,255,.14),transparent 60%)}
 .progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;transform-origin:0 50%;transform:scaleX(var(--p,0));background:var(--grad);box-shadow:0 0 12px var(--cyan)}
 
@@ -100,6 +121,9 @@ h1{font-size:clamp(52px,9vw,112px);line-height:.95;letter-spacing:-.04em;font-we
 .socials{display:flex;flex-wrap:wrap;gap:22px;margin-top:34px;font:14px var(--mono);color:var(--muted)}
 .socials a{transition:color .2s,text-shadow .2s}
 .socials a:hover{color:var(--cyan);text-shadow:0 0 10px var(--cyan)}
+/* entrance without opacity: the hero is visible from the first paint (fast LCP) */
+.hero h1,.hero .lead,.hero .cta,.hero .socials,.hero .photo{animation:rise .9s cubic-bezier(.2,.7,.2,1) var(--d,0s) both}
+@keyframes rise{from{transform:translateY(24px)}}
 
 .photo{position:relative;justify-self:center;width:min(400px,100%);aspect-ratio:1}
 .photo::before{content:"";position:absolute;inset:-12%;border-radius:50%;background:conic-gradient(var(--cyan),var(--violet),var(--pink),var(--cyan));filter:blur(60px);opacity:.4;animation:hue 12s linear infinite}
@@ -123,6 +147,8 @@ h1{font-size:clamp(52px,9vw,112px);line-height:.95;letter-spacing:-.04em;font-we
 .marquee div{display:flex;width:max-content;animation:marquee 45s linear infinite}
 /* static fonts here: SF Pro is variable and its overlapping glyph contours show through text-stroke */
 .marquee span{display:flex;align-items:center;font:700 clamp(22px,3vw,34px) "Helvetica Neue",Arial,sans-serif;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.35);white-space:nowrap}
+.marquee span::before{content:attr(data-t)}
+.kbd kbd::before{content:attr(data-k)} /* generated text: the visible label stays "terminal" for screen readers */
 .marquee span::after{content:"✦";margin:0 28px;font-size:.6em;color:var(--pink);-webkit-text-stroke:0;text-shadow:0 0 10px var(--pink)}
 .marquee span:nth-child(3n+1){color:var(--cyan);-webkit-text-stroke:0;text-shadow:0 0 18px rgba(34,227,255,.55)}
 @keyframes marquee{to{transform:translateX(-50%)}}
@@ -315,8 +341,8 @@ footer .c{font-family:var(--sans)} /* the mono © sits small and high */
 <div class="progress" aria-hidden="true"></div>
 
 <header class="nav">
-  <a class="brand" href="#top" aria-label="Alexandr Mangir, back to top">
-    <img src="headshot.jpg" alt="" width="34" height="34">
+  <a class="brand" href="#top">
+    <img src="avatar.webp" alt="" width="34" height="34">
     <span>Alexandr Mangir<small>Senior Software Engineer</small></span>
   </a>
   <nav aria-label="Main">
@@ -332,23 +358,23 @@ footer .c{font-family:var(--sans)} /* the mono © sits small and high */
 <main id="top">
   <section class="hero">
     <div>
-      <h1 data-reveal style="--d:.1s">Alexandr<br><span class="grad">Mangir</span></h1>
-      <p class="lead" data-reveal style="--d:.2s">
+      <h1 style="--d:.1s">Alexandr<br><span class="grad">Mangir</span></h1>
+      <p class="lead" style="--d:.2s">
         I build <span class="sr-only">complete products, web platforms, SaaS apps and AI-powered products</span><span class="typed" id="typed" aria-hidden="true">complete products</span><br>
         end to end — from idea and architecture to a <strong>polished, production-ready launch</strong>.
       </p>
-      <div class="cta" data-reveal style="--d:.3s">
+      <div class="cta" style="--d:.3s">
         <a class="btn" href="#contact">Get in touch <span aria-hidden="true">→</span></a>
         <a class="btn ghost" href="#work">See my work</a>
       </div>
-      <ul class="socials" data-reveal style="--d:.4s">
+      <ul class="socials" style="--d:.4s">
         <li><a href="https://github.com/Sasha95" target="_blank" rel="noopener">GitHub ↗</a></li>
         <li><a href="https://www.linkedin.com/in/alexmag" target="_blank" rel="noopener">LinkedIn ↗</a></li>
-        <li><button class="kbd" type="button" aria-label="Open terminal">&gt;_ terminal <kbd>⌘K</kbd></button></li>
+        <li><button class="kbd" type="button" aria-label="Open terminal (⌘K)">&gt;_ terminal <kbd data-k="⌘K"></kbd></button></li>
       </ul>
     </div>
-    <div class="photo" data-reveal style="--d:.2s">
-      <div class="ring"><img src="headshot.jpg" alt="Portrait of Alexandr Mangir" width="1024" height="1024"></div>
+    <div class="photo" style="--d:.2s">
+      <div class="ring"><img src="headshot-800.webp" srcset="headshot-400.webp 400w, headshot-800.webp 800w" sizes="(max-width: 440px) calc(100vw - 40px), 400px" alt="Portrait of Alexandr Mangir" width="800" height="800" fetchpriority="high"></div>
       <span class="chip c1" aria-hidden="true">&lt;React /&gt;</span>
       <span class="chip c2" aria-hidden="true">Next.js</span>
       <span class="chip c3" aria-hidden="true">AI agents ✦</span>
@@ -358,8 +384,8 @@ footer .c{font-family:var(--sans)} /* the mono © sits small and high */
 
   <div class="marquee" aria-hidden="true">
     <div>
-      <span>React</span><span>Next.js</span><span>TypeScript</span><span>Micro-frontends</span><span>Design Systems</span><span>Three.js</span><span>LLMs</span><span>RAG</span><span>AI Agents</span><span>Node.js</span><span>NestJS</span>
-      <span>React</span><span>Next.js</span><span>TypeScript</span><span>Micro-frontends</span><span>Design Systems</span><span>Three.js</span><span>LLMs</span><span>RAG</span><span>AI Agents</span><span>Node.js</span><span>NestJS</span>
+      <span data-t="React"></span><span data-t="Next.js"></span><span data-t="TypeScript"></span><span data-t="Micro-frontends"></span><span data-t="Design Systems"></span><span data-t="Three.js"></span><span data-t="LLMs"></span><span data-t="RAG"></span><span data-t="AI Agents"></span><span data-t="Node.js"></span><span data-t="NestJS"></span>
+      <span data-t="React"></span><span data-t="Next.js"></span><span data-t="TypeScript"></span><span data-t="Micro-frontends"></span><span data-t="Design Systems"></span><span data-t="Three.js"></span><span data-t="LLMs"></span><span data-t="RAG"></span><span data-t="AI Agents"></span><span data-t="Node.js"></span><span data-t="NestJS"></span>
     </div>
   </div>
 
@@ -773,7 +799,7 @@ if (finePointer && !reduce) document.querySelectorAll('.card').forEach(card => {
   const loop = () => { draw(); raf = requestAnimationFrame(loop); };
   let stopped = false;
   // fallback background: the 3D scene calls stop() once it is running
-  window.net2d = { stop() { stopped = true; cancelAnimationFrame(raf); cv.remove(); } };
+  window.net2d = { stop() { stopped = true; cancelAnimationFrame(raf); cv.classList.add('out'); setTimeout(() => cv.remove(), 1200); } };
   init();
   addEventListener('resize', () => { if (stopped) return; init(); if (reduce) draw(); });
   if (reduce) { draw(); return; }
@@ -789,20 +815,26 @@ if (finePointer && !reduce) document.querySelectorAll('.card').forEach(card => {
 
 <script type="module">
 // 3D hero: a neon "neural globe" behind the portrait plus a starfield over the whole page.
-// Without WebGL, with reduced motion or if the CDN is unreachable, the 2D net stays.
+// It starts after load in small idle steps, so it never holds up the page.
+// Without a hardware GPU, with reduced motion or if the CDN is unreachable, the 2D net stays.
+const idle = () => new Promise(r => (window.requestIdleCallback || setTimeout)(r, { timeout: 800 }));
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   try {
-    start3d(await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js'));
+    if (document.readyState !== 'complete') await new Promise(r => addEventListener('load', r, { once: true }));
+    await idle();
+    await start3d(await import('https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js'));
   } catch (err) {
     console.info('3D scene disabled, using the 2D background:', err.message);
   }
 }
 
-function start3d(THREE) {
+async function start3d(THREE) {
+  await idle();
   const canvas = Object.assign(document.createElement('canvas'), { id: 'scene' });
   canvas.setAttribute('aria-hidden', 'true');
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); // throws without WebGL
-  document.body.prepend(canvas);
+  // throws without WebGL or when it would only run in software (no GPU)
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, failIfMajorPerformanceCaveat: true });
+  await idle();
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
   camera.position.z = 9;
@@ -831,11 +863,15 @@ function start3d(THREE) {
   nodes.setAttribute('color', rgb(col));
   globe.add(new THREE.Points(nodes, dots(0.09)));
 
-  // links to the 3 nearest nodes; ponytail: O(n²) pass, once at start (n = 380)
+  // links to the 3 nearest nodes; ponytail: O(n²) scan keeping the best 3, once at start (n = 380, ~1 ms)
   const edges = [], lineEnds = [], lineCol = [];
   pos.forEach((p, i) => {
-    pos.map((q, j) => [p.distanceToSquared(q), j]).sort((x, y) => x[0] - y[0]).slice(1, 4)
-      .forEach(([, j]) => { if (i < j) { edges.push([i, j]); lineEnds.push(p, pos[j]); lineCol.push(col[i], col[j]); } });
+    const near = [[Infinity], [Infinity], [Infinity]];
+    pos.forEach((q, j) => {
+      const d = p.distanceToSquared(q);
+      if (j !== i && d < near[2][0]) { near[2] = [d, j]; near.sort((x, y) => x[0] - y[0]); }
+    });
+    near.forEach(([, j]) => { if (i < j) { edges.push([i, j]); lineEnds.push(p, pos[j]); lineCol.push(col[i], col[j]); } });
   });
   const links = new THREE.BufferGeometry().setFromPoints(lineEnds);
   links.setAttribute('color', rgb(lineCol));
@@ -936,6 +972,9 @@ function start3d(THREE) {
     renderer.render(scene, camera);
     raf = requestAnimationFrame(frame);
   };
+  await renderer.compileAsync(scene, camera); // shaders compile off the main thread where supported
+  await idle();
+  document.body.prepend(canvas);
   document.addEventListener('visibilitychange', () => { cancelAnimationFrame(raf); if (!document.hidden) frame(); });
   frame();
   window.net2d?.stop(); // 3D is running — retire the 2D background

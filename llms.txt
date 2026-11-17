@@ -1,0 +1,33 @@
+# Alexandr Mangir — Senior Software Engineer
+
+> Full-stack Senior Software Engineer with 8+ years of experience building high-performance, scalable web products: React, Next.js and TypeScript on the frontend, Node.js and NestJS on the backend, and AI features built on LLMs and RAG.
+
+## Profile
+
+- [Personal site](https://sasha95.github.io/): about, selected work, process, experience, stack and contacts
+- [LinkedIn](https://www.linkedin.com/in/alexmag): full work history; the best way to get in touch
+- [GitHub](https://github.com/Sasha95): code
+
+## Key facts
+
+- Role: Senior Software Engineer, full stack
+- Experience: 8+ years; 3 platforms built on micro-frontend architecture, 2 company-wide design systems
+- Frontend: React, Next.js, TypeScript, Redux Toolkit, TanStack Query, Tailwind, React Native
+- Architecture: micro-frontends (Module Federation, Single-SPA), design systems, FSD, DDD
+- Backend: Node.js, NestJS, Stripe
+- AI: LLMs, RAG, embeddings and vector search, AI agents, MCP
+- 3D and real-time: Three.js, socket.io, rich editors, DXF
+- Education: MSc in Applied Mathematics & Computer Science, Shevchenko Transnistria State University
+
+## Selected work
+
+- maib design system: shared UI component library for product teams, micro-frontends for digital banking, card management for corporate clients
+- Otherweb & PressHub: a junk-free news platform that uses AI to filter clickbait and misinformation, plus an AI editorial workflow for journalists
+- [Raters](https://www.ratersapp.com/): a social network for movie lovers with a Telegram Mini App, Web3 login and an x402 paid API for AI agents
+- Flowqe: a web CAD for electrical engineering with a diagram editor, real-time calculations and DXF import/export
+- [Everact](https://everact.io/): a platform to create and sell online courses with an LMS, a visual funnel builder and Stripe billing
+- RAG & AI workflows: RAG over internal knowledge, workflow automation and spec-driven development with coding agents
+
+## How he works
+
+Discover → Architect → Build → Launch & grow: clear scope first, architecture that scales, short iterations with demos, then monitoring and improvements based on real usage.
