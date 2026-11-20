@@ -925,24 +925,31 @@ async function start3d(THREE, canvas, context) {
     starSeeds.forEach((s, i) => {
       const depth = camera.position.z - s.z, halfH = depth * tanHalfFov * 1.1, halfW = halfH * camera.aspect;
       starPos[i * 3] = wrap(s.x + t * .003) * halfW;
-      starPos[i * 3 + 1] = wrap(s.y + scrollY * .0035 / depth) * halfH;
+      starPos[i * 3 + 1] = wrap(s.y + sy * .0035 / depth) * halfH;
       starPos[i * 3 + 2] = s.z;
     });
     starGeo.attributes.position.needsUpdate = true;
   };
 
-  // pin the globe behind the portrait: it scrolls away together with the hero
+  // pin the globe behind the portrait: it scrolls away together with the hero.
+  // Layout is measured on scroll/resize only, never inside the animation frame (no forced reflow).
   const photo = document.querySelector('.photo'), ray = new THREE.Vector3();
+  let sy = scrollY, vw = innerWidth, vh = innerHeight, box;
+  const measure = () => { const r = photo.getBoundingClientRect(); sy = scrollY; box = { x: r.left + r.width / 2, y: r.top + r.height / 2 + sy, w: r.width }; };
+  measure();
+  addEventListener('scroll', () => { sy = scrollY; }, { passive: true });
+  photo.addEventListener('animationend', measure); // once the entrance slide-in has finished
   const placeGlobe = () => {
-    const r = photo.getBoundingClientRect();
-    ray.set((r.left + r.width / 2) / innerWidth * 2 - 1, 1 - (r.top + r.height / 2) / innerHeight * 2, .5)
+    ray.set(box.x / vw * 2 - 1, 1 - (box.y - sy) / vh * 2, .5)
       .unproject(camera).sub(camera.position).normalize();
     globe.position.copy(camera.position).addScaledVector(ray, -camera.position.z / ray.z);
-    const worldPerPx = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z / innerHeight;
-    globe.scale.setScalar(r.width * .62 * worldPerPx / R);
+    const worldPerPx = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * camera.position.z / vh;
+    globe.scale.setScalar(box.w * .62 * worldPerPx / R);
   };
 
   const resize = () => {
+    vw = innerWidth; vh = innerHeight;
+    measure();
     // cap the drawing buffer at ~6 MP: huge retina screens stay smooth and within GPU limits
     renderer.setPixelRatio(Math.min(devicePixelRatio, 2, Math.sqrt(6e6 / (innerWidth * innerHeight))));
     renderer.setSize(innerWidth, innerHeight, false);
@@ -964,7 +971,7 @@ async function start3d(THREE, canvas, context) {
     camera.updateMatrixWorld();
     placeGlobe();
     globe.rotation.y = t * .12;
-    globe.rotation.x = Math.sin(t * .2) * .15 + scrollY * .0006;
+    globe.rotation.x = Math.sin(t * .2) * .15 + sy * .0006;
     core.rotation.set(t * .15, -t * .3, 0);
     orbit1.rotation.z = t * .25;
     orbit2.rotation.z = -t * .18;
