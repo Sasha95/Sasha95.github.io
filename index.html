@@ -674,7 +674,6 @@ const onScroll = () => {
   requestAnimationFrame(() => { ticking = false; const y = scrollY; update(y); kickMarquee(y); });
 };
 addEventListener('scroll', onScroll, { passive: true });
-addEventListener('resize', onScroll);
 new ResizeObserver(() => update()).observe(document.body); // after layout: first frame and page height changes, no forced reflow
 if (finePointer) addEventListener('pointermove', e => {
   root.style.setProperty('--mx', e.clientX + 'px');
@@ -968,9 +967,9 @@ async function start3d(THREE, canvas, context) {
     camera.updateProjectionMatrix();
   };
   resize();
-  addEventListener('resize', resize);
+  new ResizeObserver(() => resize()).observe(canvas); // after layout, once the canvas is on the page: no forced reflow
   const mouse = { x: 0, y: 0 };
-  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth - .5; mouse.y = e.clientY / innerHeight - .5; }, { passive: true });
+  addEventListener('pointermove', e => { mouse.x = e.clientX / vw - .5; mouse.y = e.clientY / vh - .5; }, { passive: true });
 
   const clock = new THREE.Clock();
   let raf = 0;
