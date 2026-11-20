@@ -628,22 +628,24 @@ const spy = new IntersectionObserver(entries => entries.forEach(e => {
 }), { rootMargin: '-45% 0px -50% 0px' });
 document.querySelectorAll('main section[id]').forEach(s => spy.observe(s));
 
-// scroll progress bar + cursor spotlight
-const progress = () => root.style.setProperty('--p', scrollY / Math.max(1, root.scrollHeight - innerHeight));
 
 // stagger index for the tag pop-in
 document.querySelectorAll('.pills').forEach(ul => [...ul.children].forEach((li, i) => li.style.setProperty('--i', i)));
 
-// experience line fills up to ~60% of the screen; dots light up once the line reaches them
+// scroll progress bar; the experience line fills up to ~60% of the screen and dots light up once it reaches them.
+// All layout is read first and written after, so a frame never forces a second layout.
 const timeline = document.querySelector('.timeline'), milestones = [...timeline.children];
-const fillTimeline = () => {
+const update = (y = scrollY) => {
+  const p = y / Math.max(1, root.scrollHeight - innerHeight);
   const r = timeline.getBoundingClientRect(), mark = innerHeight * .62;
   const end = milestones.at(-1).offsetTop + 5; // both lines stop at the centre of the last dot
-  timeline.style.setProperty('--tl-end', end + 'px');
+  const tops = milestones.map(li => li.getBoundingClientRect().top);
   const fill = Math.max(0, Math.min(end, mark - r.top - 8));
+  root.style.setProperty('--p', p);
+  timeline.style.setProperty('--tl-end', end + 'px');
   timeline.style.setProperty('--tl', fill + 'px');
   timeline.classList.toggle('done', fill >= end); // drop the glowing head once it reaches the last dot
-  milestones.forEach(li => li.classList.toggle('passed', li.getBoundingClientRect().top + 7 < mark));
+  milestones.forEach((li, i) => li.classList.toggle('passed', tops[i] + 7 < mark));
 };
 
 // the marquee speeds up with scroll velocity and runs backwards when scrolling up
@@ -655,9 +657,9 @@ const easeMarquee = () => {
   if (Math.abs(rate - 1) > .01) requestAnimationFrame(easeMarquee);
   else { marquee.playbackRate = rate = 1; easing = false; }
 };
-const kickMarquee = () => {
-  const dy = scrollY - (lastY ?? scrollY);
-  lastY = scrollY;
+const kickMarquee = y => {
+  const dy = y - (lastY ?? y);
+  lastY = y;
   if (marquee === undefined) marquee = document.querySelector('.marquee div').getAnimations()[0] || null;
   if (!marquee) return;
   rate = Math.max(-5, Math.min(6, 1 + dy * .08));
@@ -669,11 +671,11 @@ let ticking = false;
 const onScroll = () => {
   if (ticking) return;
   ticking = true;
-  requestAnimationFrame(() => { ticking = false; progress(); fillTimeline(); kickMarquee(); });
+  requestAnimationFrame(() => { ticking = false; const y = scrollY; update(y); kickMarquee(y); });
 };
 addEventListener('scroll', onScroll, { passive: true });
 addEventListener('resize', onScroll);
-requestAnimationFrame(() => { progress(); fillTimeline(); }); // in the first frame, not during parsing: no extra forced layout
+new ResizeObserver(() => update()).observe(document.body); // after layout: first frame and page height changes, no forced reflow
 if (finePointer) addEventListener('pointermove', e => {
   root.style.setProperty('--mx', e.clientX + 'px');
   root.style.setProperty('--my', e.clientY + 'px');
@@ -763,9 +765,9 @@ if (finePointer && !reduce) document.querySelectorAll('.card').forEach(card => {
   const LINK = 140, MOUSE = 200;
   let w, h, pts = [], raf = 0;
   const mouse = { x: -1e4, y: -1e4 };
-  const init = () => {
+  const init = (cw, ch) => {
     const dpr = Math.min(devicePixelRatio || 1, 2);
-    w = innerWidth; h = innerHeight;
+    w = cw; h = ch;
     cv.width = w * dpr; cv.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     // ponytail: O(n²) neighbour scan, fine because n is capped at 90
@@ -806,8 +808,12 @@ if (finePointer && !reduce) document.querySelectorAll('.card').forEach(card => {
   let stopped = false;
   // fallback background: the 3D scene calls stop() once it is running
   window.net2d = { stop() { stopped = true; cancelAnimationFrame(raf); cv.classList.add('out'); setTimeout(() => cv.remove(), 1200); } };
-  addEventListener('resize', () => { if (stopped) return; init(); if (reduce) draw(); });
-  afterLoad(() => { init(); if (reduce) draw(); }); // sized after load: no forced layout while parsing
+  // sized after load by a ResizeObserver: its callback runs after layout, so reading the size never forces a reflow
+  afterLoad(() => new ResizeObserver(([e]) => {
+    if (stopped) return;
+    init(e.contentRect.width, e.contentRect.height);
+    if (reduce) draw();
+  }).observe(cv));
   if (reduce) return;
   addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
   document.addEventListener('mouseleave', () => { mouse.x = mouse.y = -1e4; });
@@ -935,10 +941,15 @@ async function start3d(THREE, canvas, context) {
   // Layout is measured on scroll/resize only, never inside the animation frame (no forced reflow).
   const photo = document.querySelector('.photo'), ray = new THREE.Vector3();
   let sy = scrollY, vw = innerWidth, vh = innerHeight, box;
-  const measure = () => { const r = photo.getBoundingClientRect(); sy = scrollY; box = { x: r.left + r.width / 2, y: r.top + r.height / 2 + sy, w: r.width }; };
+  // the layout box ignores the slide-in transform, so the globe sits at the portrait's final spot from the start
+  const measure = () => {
+    let x = photo.offsetWidth / 2, y = photo.offsetHeight / 2;
+    for (let el = photo; el; el = el.offsetParent) { x += el.offsetLeft; y += el.offsetTop; }
+    box = { x, y, w: photo.offsetWidth };
+  };
   measure();
   addEventListener('scroll', () => { sy = scrollY; }, { passive: true });
-  photo.addEventListener('animationend', measure); // once the entrance slide-in has finished
+  new ResizeObserver(measure).observe(photo.closest('.hero')); // runs after layout: the hero moved or resized
   const placeGlobe = () => {
     ray.set(box.x / vw * 2 - 1, 1 - (box.y - sy) / vh * 2, .5)
       .unproject(camera).sub(camera.position).normalize();
